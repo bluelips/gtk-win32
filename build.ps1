@@ -233,7 +233,7 @@ $items = @{
 	};
 
 	'gtk3' = @{
-		'ArchiveUrl' = 'http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/3.18/gtk+-3.18.6.tar.xz';
+		'ArchiveUrl' = 'http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/3.18/gtk+-3.18.7.tar.xz';
 		'Dependencies' = @('atk', 'gdk-pixbuf', 'pango', 'libepoxy')
 	};
 
@@ -646,7 +646,7 @@ $items['gsettings-desktop-schemas'].BuildScript = {
 	Push-Location .\build\win32
 
 	Exec nmake /f gsettings-desktop-schemas-msvc.mak clean
-	Exec nmake /f gsettings-desktop-schemas-msvc.mak PYTHON=`"c:\Python27\python.exe`" PYTHON2=`"c:\Python27\python.exe`" PERL=`"c:\Perl\bin\perl.exe`"  PREFIX=`"$workingDirectory\..\..\gtk\$platform`"
+	Exec nmake /f gsettings-desktop-schemas-msvc.mak PYTHON=`"c:\Python27\python.exe`" PYTHON2=`"c:\Python27\python.exe`" PERL=`"$PerlDirectory\bin\perl.exe`"  PREFIX=`"$workingDirectory\..\..\gtk\$platform`"
 	Exec nmake /f gsettings-desktop-schemas-msvc.mak install PREFIX=`"$workingDirectory\..\..\gtk\$platform`"
 
 	Pop-Location
@@ -718,7 +718,7 @@ $items['harfbuzz'].BuildScript = {
 	Push-Location .\build\win32
 
 	Exec nmake /f Makefile.vc clean CFG=release
-	Exec nmake /f Makefile.vc CFG=release PYTHON=`"c:\Python27\python.exe`" PERL=`"c:\Perl\bin\perl.exe`" PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
+	Exec nmake /f Makefile.vc CFG=release PYTHON=`"c:\Python27\python.exe`" PERL=`"$PerlDirectory\bin\perl.exe`" PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
 	Exec nmake /f Makefile.vc install CFG=release PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
 
 	Pop-Location

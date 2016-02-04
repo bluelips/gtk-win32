@@ -97,6 +97,9 @@ param (
 	[string][ValidateSet('x86', 'x64')]
 	$Configuration = 'x86',
 
+	[string[]][ValidateSet('Debug', 'Release')]
+	$BuildTypes = @("Debug","Release"),
+
 	[switch]
 	$DisableParallelBuild = $false,
 
@@ -1078,19 +1081,25 @@ $items['win-iconv'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Remove-Item -Recurse CMakeCache.txt, CMakeFiles -ErrorAction Ignore
-
 	Exec $patch -p1 -i missing-endif.patch
+	Exec $patch -p1 -i library-name.patch
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
 	$env:PATH += ";$CMakePath"
 
-	Exec cmake -G 'NMake Makefiles' "-DCMAKE_INSTALL_PREFIX=`"$packageDestination`"" -DCMAKE_BUILD_TYPE=Release
-	Exec nmake clean
-	Exec nmake
-	Exec nmake install
-	Exec nmake clean
+	$bn = @{Debug='-d'; Release=''}
+
+	foreach ($bt in $BuildTypes)
+	{
+		Remove-Item -Recurse CMakeCache.txt, CMakeFiles -ErrorAction Ignore
+
+		Exec cmake -G 'NMake Makefiles' "-DCMAKE_INSTALL_PREFIX=`"$packageDestination`"" -DCMAKE_BUILD_TYPE="$bt" -DSUFFIX="$($bn[$bt])"
+		Exec nmake clean
+		Exec nmake
+		Exec nmake install
+		Exec nmake clean
+	}
 
 	[void] (Swap-Environment $originalEnvironment)
 
@@ -1106,31 +1115,36 @@ $items['zlib'].BuildScript = {
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\zlib.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+	$bn = @{Debug='zlib1-d'; Release='zlib1'}
 
-	[void] (Swap-Environment $originalEnvironment)
+	foreach ($bt in $BuildTypes)
+	{
+		Exec msbuild build\win32\vs$VSVer\zlib.sln /p:Platform=$platform /p:Configuration=$bt /maxcpucount /nodeReuse:True
 
-	Push-Location ".\build\vs$VSVer\Release\$platform"
+		[void] (Swap-Environment $originalEnvironment)
 
-	New-Item -Type Directory $packageDestination\include
-	Copy-Item `
-		.\include\zlib.h, `
-		.\include\zconf.h `
-		$packageDestination\include
+		Push-Location ".\build\vs$VSVer\$bt\$platform"
 
-	New-Item -Type Directory $packageDestination\bin
-	Copy-Item `
-		.\bin\zlib1.dll, `
-		.\bin\zlib1.pdb  `
-		$packageDestination\bin
+		New-Item -Type Directory $packageDestination\include
+		Copy-Item `
+			.\include\zlib.h, `
+			.\include\zconf.h `
+			$packageDestination\include
 
-	New-Item -Type Directory $packageDestination\lib
-	Copy-Item .\lib\zlib1.lib $packageDestination\lib
+		New-Item -Type Directory $packageDestination\bin
+		Copy-Item `
+			.\bin\$($bn[$bt]).dll, `
+			.\bin\$($bn[$bt]).pdb  `
+			$packageDestination\bin
 
-	Pop-Location
+		New-Item -Type Directory $packageDestination\lib
+		Copy-Item .\lib\$($bn[$bt]).lib $packageDestination\lib
 
-	New-Item -Type Directory $packageDestination\share\doc\zlib
-	Copy-Item .\README $packageDestination\share\doc\zlib
+		Pop-Location
+
+		New-Item -Type Directory $packageDestination\share\doc\zlib
+		Copy-Item .\README $packageDestination\share\doc\zlib
+	}
 
 	Package $packageDestination
 }
@@ -1457,6 +1471,7 @@ while (@($items.GetEnumerator() | ?{ ($_.Value.State -eq 'Pending') -or ($_.Valu
 				$VSInstallPath = $using:VSInstallPath
 				$VSVer = $using:VSVer
 				$workingDirectory = $using:workingDirectory
+				$BuildTypes = $using:buildTypes
 
 				Set-Location $item.BuildDirectory
 

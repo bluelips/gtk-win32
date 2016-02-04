@@ -86,12 +86,12 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(ProjectName)1.dll</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)1-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName)1.lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(ProjectName)1-d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
-      <ProgramDatabaseFile>$(TargetDir)$(ProjectName)1.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(ProjectName)1-d.pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,12 +110,12 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(ProjectName)1.dll</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)1-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName)1.lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(ProjectName)1-d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
-      <ProgramDatabaseFile>$(TargetDir)$(ProjectName)1.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)$(ProjectName)1-d.pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

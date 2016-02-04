@@ -1,0 +1,11 @@
+--- win-iconv.orig/CMakeLists.txt	2016-01-12 16:57:58.000000000 +0300
++++ win-iconv/CMakeLists.txt	2016-02-05 01:33:18.497267300 +0300
+@@ -38,7 +38,7 @@
+ if(BUILD_SHARED)
+     add_library(iconv SHARED win_iconv.c iconv.def)
+     set_target_properties(iconv PROPERTIES COMPILE_FLAGS "-DMAKE_DLL"
+-                                           PREFIX "")
++                                           PREFIX "" OUTPUT_NAME "iconv${SUFFIX}")
+     if(WINCE)
+         target_link_libraries(iconv ${WCECOMPAT_LIBRARIES})
+     endif(WINCE)

@@ -212,12 +212,12 @@ $items = @{
 
 	'gettext-runtime' = @{
 		'ArchiveUrl' = 'http://dl.hexchat.net/gtk-win32/src/gettext-vc100-0.18-src.tar.bz2'
-		'Dependencies' = @('win-iconv')
+		'Dependencies' = @()
 	};
 
 	'glib' = @{
 		'ArchiveUrl' = 'http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.46/glib-2.46.2.tar.xz'
-		'Dependencies' = @('gettext-runtime', 'libffi', 'zlib')
+		'Dependencies' = @()
 	};
 
 	'glib-networking' = @{
@@ -588,18 +588,24 @@ $items['gettext-runtime'].BuildScript = {
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
 	Exec $patch -p1 -i gettext-runtime.patch
-	Exec $patch -p1 -i gettext-lib-prexif.patch
-
-	Remove-Item -Recurse CMakeCache.txt, CMakeFiles -ErrorAction Ignore
+	Exec $patch -p1 -i gettext-lib-prexif.patch	
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
 	$env:PATH += ";$CMakePath"
-	Exec cmake -G 'NMake Makefiles' "-DCMAKE_INSTALL_PREFIX=`"$packageDestination`"" -DCMAKE_BUILD_TYPE=Release "-DICONV_INCLUDE_DIR=`"$packageDestination\..\..\..\gtk\$platform\include`"" "-DICONV_LIBRARIES=`"$packageDestination\..\..\..\gtk\$platform\lib\iconv.lib`""
-	Exec nmake clean
-	Exec nmake
-	Exec nmake install
-	Exec nmake clean
+
+	$bn = @{Debug='-d'; Release=''}
+
+	foreach ($bt in $BuildTypes)
+	{
+		Remove-Item -Recurse CMakeCache.txt, CMakeFiles -ErrorAction Ignore
+
+		Exec cmake -G 'NMake Makefiles' "-DCMAKE_INSTALL_PREFIX=`"$packageDestination`"" -DCMAKE_BUILD_TYPE="$bt" "-DICONV_INCLUDE_DIR=`"$packageDestination\..\..\..\gtk\$platform\include`"" "-DICONV_LIBRARIES=`"$packageDestination\..\..\..\gtk\$platform\lib\iconv$($bn[$bt]).lib`"" -DSUFFIX="$($bn[$bt])"
+		Exec nmake clean
+		Exec nmake
+		Exec nmake install
+		Exec nmake clean
+	}
 
 	[void] (Swap-Environment $originalEnvironment)
 
@@ -1111,15 +1117,15 @@ $items['win-iconv'].BuildScript = {
 
 $items['zlib'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
-	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
-
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	Remove-Item -Recurse $packageDestination -ErrorAction Ignore	
 
 	$bn = @{Debug='zlib1-d'; Release='zlib1'}
 
 	foreach ($bt in $BuildTypes)
 	{
-		Exec msbuild build\win32\vs$VSVer\zlib.sln /p:Platform=$platform /p:Configuration=$bt /maxcpucount /nodeReuse:True
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
+
+		Exec msbuild build\win32\vs$VSVer\zlib.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
 
 		[void] (Swap-Environment $originalEnvironment)
 

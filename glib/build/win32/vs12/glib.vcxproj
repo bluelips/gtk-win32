@@ -138,21 +138,21 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GLibBuildDefines);G_ENABLE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -164,21 +164,21 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GLibBuildDefines);G_ENABLE_DEBUG;$(UseSystemPCREDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -190,7 +190,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GLibBuildDefines);G_ENABLE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -200,11 +200,11 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -216,7 +216,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GLibBuildDefines);G_ENABLE_DEBUG;$(UseSystemPCREDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -226,11 +226,11 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -249,7 +249,7 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
@@ -275,7 +275,7 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcre.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
@@ -301,7 +301,7 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
@@ -327,7 +327,7 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;pcre.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>

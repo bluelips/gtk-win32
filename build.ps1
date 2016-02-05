@@ -212,12 +212,12 @@ $items = @{
 
 	'gettext-runtime' = @{
 		'ArchiveUrl' = 'http://dl.hexchat.net/gtk-win32/src/gettext-vc100-0.18-src.tar.bz2'
-		'Dependencies' = @()
+		'Dependencies' = @('win-iconv')
 	};
 
 	'glib' = @{
 		'ArchiveUrl' = 'http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.46/glib-2.46.2.tar.xz'
-		'Dependencies' = @()
+		'Dependencies' = @('gettext-runtime', 'libffi', 'zlib')
 	};
 
 	'glib-networking' = @{
@@ -622,13 +622,18 @@ $items['glib'].BuildScript = {
 	Exec $patch -p1 -i glib-if_nametoindex.patch
 	Exec $patch -p1 -i glib-package-installation-directory.patch
 	Exec $patch -p1 -i 0001-Change-message-system-to-use-fputs-instead-of-write.patch
-	Exec $patch -p1 -i Add-gsystemthreadsetname-implementation-for-W32-th.patch
+	Exec $patch -p1 -i Add-gsystemthreadsetname-implementation-for-W32-th.patch	
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	$bn = @{Debug='zlib1-d'; Release='zlib1'}
 
-	Exec msbuild build\win32\vs$VSVer\glib.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	[void] (Swap-Environment $originalEnvironment)
+		Exec msbuild build\win32\vs$VSVer\glib.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
+
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\glib
 	Copy-Item .\COPYING $packageDestination\share\doc\glib
@@ -1117,7 +1122,7 @@ $items['win-iconv'].BuildScript = {
 
 $items['zlib'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
-	Remove-Item -Recurse $packageDestination -ErrorAction Ignore	
+	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
 	$bn = @{Debug='zlib1-d'; Release='zlib1'}
 

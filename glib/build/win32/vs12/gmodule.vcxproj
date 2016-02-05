@@ -76,20 +76,20 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GModuleBuildDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -126,7 +126,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;$(GModuleBuildDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -136,10 +136,10 @@
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>

@@ -17,6 +17,8 @@
     <GObjectBuildDefines>GOBJECT_COMPILATION;$(DllExportDefines);G_LOG_DOMAIN="GLib-GObject";FFI_BUILDING</GObjectBuildDefines>
     <GioBuildDefines>$(GioInBuildMacro);G_LOG_DOMAIN="GLib-GIO";$(DllExportDefines)</GioBuildDefines>
     <WindowsNetworkingLibs>ws2_32.lib;shlwapi.lib;dnsapi.lib;iphlpapi.lib</WindowsNetworkingLibs>
+    <CPPDepLibsRelease>intl.lib</CPPDepLibsRelease>
+    <CPPDepLibsDebug>intl-d.lib</CPPDepLibsDebug>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>glibbuilddefinesprops</_PropertySheetDisplayName>
@@ -32,7 +34,7 @@
       <AdditionalOptions>/d2Zi+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(GlibEtcInstallRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -75,6 +77,12 @@
     </BuildMacro>
     <BuildMacro Include="WindowsNetworkingLibs">
       <Value>$(WindowsNetworkingLibs)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsRelease">
+      <Value>$(CPPDepLibsRelease)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsDebug">
+      <Value>$(CPPDepLibsDebug)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

@@ -25,16 +25,16 @@
 			if "$(Configuration)" == "Release" copy $(BinDir)\$(GlibDllPrefix)gio$(GlibDllSuffix).dll $(CopyDir)\bin
 			if "$(Configuration)" == "Release" copy $(BinDir)\$(GlibDllPrefix)gio$(GlibDllSuffix).pdb $(CopyDir)\bin
 
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)glib-d$(GlibDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)glib-d$(GlibDllSuffix).pdb $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gthread-d$(GlibDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gthread-d$(GlibDllSuffix).pdb $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gmodule-d$(GlibDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gmodule-d$(GlibDllSuffix).pdb $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gobject-d$(GlibDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gobject-d$(GlibDllSuffix).pdb $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gio-d$(GlibDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gio-d$(GlibDllSuffix).pdb $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)glib$(GlibDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)glib$(GlibDllSuffix)-d.pdb $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gthread$(GlibDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gthread$(GlibDllSuffix)-d.pdb $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gmodule$(GlibDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gmodule$(GlibDllSuffix)-d.pdb $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gobject$(GlibDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gobject$(GlibDllSuffix)-d.pdb $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gio$(GlibDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(GlibDllPrefix)gio$(GlibDllSuffix)-d.pdb $(CopyDir)\bin
 
 			copy $(BinDir)\glib-genmarshal.exe $(CopyDir)\bin
 			copy $(BinDir)\glib-genmarshal.pdb $(CopyDir)\bin

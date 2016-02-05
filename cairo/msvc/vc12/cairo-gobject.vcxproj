@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_FC|Win32">
+      <Configuration>Debug_FC</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_FC|x64">
+      <Configuration>Debug_FC</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_FC|Win32">
       <Configuration>Release_FC</Configuration>
       <Platform>Win32</Platform>
@@ -57,6 +65,19 @@
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_FC|Win32'">
+    <Link>
+      <OutputFile>$(OutDir)$(CairoDllPrefix)$(ProjectName)$(CairoDllSuffix)-d.dll</OutputFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>gobject-2.0-d.lib;glib-2.0-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion)-d.pdb</ProgramDataBaseFileName>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\util\cairo-gobject\cairo-gobject-enums.c" />

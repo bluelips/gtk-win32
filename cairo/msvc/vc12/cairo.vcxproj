@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_FC|Win32">
+      <Configuration>Debug_FC</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_FC|x64">
+      <Configuration>Debug_FC</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release_FC|Win32">
       <Configuration>Release_FC</Configuration>
       <Platform>Win32</Platform>
@@ -39,16 +47,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(CairoDllPrefix)$(ProjectName)$(CairoDllSuffix).dll</OutputFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName).lib</ImportLibrary>
-      <AdditionalDependencies>fontconfig.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -58,7 +62,28 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_FC|Win32'">
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(CairoDllPrefix)$(ProjectName)$(CairoDllSuffix).dll</OutputFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName).lib</ImportLibrary>
+      <AdditionalDependencies>pixman-1.lib;libpng16.lib;zlib1.lib;fontconfig.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <Optimization>MaxSpeed</Optimization>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_FC|Win32'">
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(CairoDllPrefix)$(ProjectName)$(CairoDllSuffix)-d.dll</OutputFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d.lib</ImportLibrary>
+      <AdditionalDependencies>pixman-1-d.lib;libpng16-d.lib;zlib1-d.lib;fontconfig-d.lib;freetype-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion)-d.pdb</ProgramDataBaseFileName>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\cairo.c" />

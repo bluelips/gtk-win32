@@ -347,11 +347,14 @@ $items['cairo'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild msvc\vc$VSVer\cairo.sln /p:Platform=$platform /p:Configuration=Release_FC /maxcpucount /nodeReuse:True
+		Exec msbuild msvc\vc$VSVer\cairo.sln /p:Platform=$platform /p:Configuration="$bt"_FC /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\cairo
 	Copy-Item .\COPYING $packageDestination\share\doc\cairo

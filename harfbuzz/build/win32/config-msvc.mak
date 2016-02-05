@@ -2,26 +2,43 @@
 
 # You may change these lines to customize the .lib files that will be linked to
 # Additional Libraries for building HarfBuzz-ICU
+
+!if "$(CFG)" == "debug"
 # icudt.lib may be required for static ICU builds
 HB_ICU_DEP_LIBS = icuuc.lib
+# GLib is required for all utility programs and tests
+HB_GLIB_LIBS = glib-2.0-d.lib
+# Needed for building HarfBuzz-GObject
+HB_GOBJECT_DEP_LIBS = gobject-2.0-d.lib $(HB_GLIB_LIBS)
+# Freetype is needed for building FreeType support and hb-view
+FREETYPE_LIB = freetype-d.lib
+# Cairo is needed for building hb-view
+CAIRO_LIB = cairo-d.lib
+# Graphite2 is needed for building SIL Graphite2 support
+GRAPHITE2_LIB = graphite2-d.lib
+# Directwrite is needed for DirectWrite shaping support
+DIRECTWRITE_LIB = dwrite-d.lib
 
+HB_CFLAGS=/MD
+!else
+# icudt.lib may be required for static ICU builds
+HB_ICU_DEP_LIBS = icuuc.lib
 # GLib is required for all utility programs and tests
 HB_GLIB_LIBS = glib-2.0.lib
-
 # Needed for building HarfBuzz-GObject
 HB_GOBJECT_DEP_LIBS = gobject-2.0.lib $(HB_GLIB_LIBS)
-
 # Freetype is needed for building FreeType support and hb-view
 FREETYPE_LIB = freetype.lib
-
 # Cairo is needed for building hb-view
 CAIRO_LIB = cairo.lib
-
 # Graphite2 is needed for building SIL Graphite2 support
 GRAPHITE2_LIB = graphite2.lib
-
 # Directwrite is needed for DirectWrite shaping support
 DIRECTWRITE_LIB = dwrite.lib
+
+HB_CFLAGS=/MDd
+!endif
+
 
 # Please do not change anything beneath this line unless maintaining the NMake Makefiles
 # Bare minimum features and sources built into HarfBuzz on Windows
@@ -43,8 +60,13 @@ HB_HEADERS =	\
 # Minimal set of (system) libraries needed for the HarfBuzz DLL
 HB_DEP_LIBS = usp10.lib gdi32.lib rpcrt4.lib user32.lib
 
+!if "$(CFG)" == "debug"
+# We build the HarfBuzz DLL/LIB at least
+HB_LIBS = $(CFG)\$(PLAT)\harfbuzz-d.lib
+!else
 # We build the HarfBuzz DLL/LIB at least
 HB_LIBS = $(CFG)\$(PLAT)\harfbuzz.lib
+!endif
 
 # Note: All the utility and test programs require GLib support to be present!
 HB_UTILS =
@@ -54,21 +76,40 @@ HB_TESTS_DEP_LIBS = $(HB_GLIB_LIBS)
 
 # Use libtool-style DLL names, if desired
 !if "$(LIBTOOL_DLL_NAME)" == "1"
+!if "$(CFG)" == "debug"
+HARFBUZZ_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-0-d
+HARFBUZZ_ICU_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-icu-0-d
+HARFBUZZ_GOBJECT_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-gobject-0-d
+!else
 HARFBUZZ_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-0
 HARFBUZZ_ICU_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-icu-0
 HARFBUZZ_GOBJECT_DLL_FILENAME = $(CFG)\$(PLAT)\libharfbuzz-gobject-0
+!endif
+!else
+!if "$(CFG)" == "debug"
+HARFBUZZ_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz-d
+HARFBUZZ_ICU_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz-icu-d
+HARFBUZZ_GOBJECT_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz-gobject-d
 !else
 HARFBUZZ_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz
 HARFBUZZ_ICU_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz-icu
 HARFBUZZ_GOBJECT_DLL_FILENAME = $(CFG)\$(PLAT)\harfbuzz-gobject
 !endif
+!endif
 
-# Enable HarfBuzz-ICU, if desired
 !if "$(ICU)" == "1"
+# Enable HarfBuzz-ICU, if desired
+!if "$(CFG)" == "debug"
+HB_ICU_CFLAGS =
+HB_LIBS =	\
+	$(HB_LIBS)	\
+	$(CFG)\$(PLAT)\harfbuzz-icu-d.lib
+!else
 HB_ICU_CFLAGS =
 HB_LIBS =	\
 	$(HB_LIBS)	\
 	$(CFG)\$(PLAT)\harfbuzz-icu.lib
+!endif
 
 # We don't want to re-define int8_t Visual Studio 2008, will cause build breakage
 # as we define it in hb-common.h, and we ought to use the definitions there.
@@ -89,10 +130,17 @@ EXTRA_TARGETS =
 
 # Enable HarfBuzz-GObject (enables GLib support as well)
 !if "$(GOBJECT)" == "1"
+!if "$(CFG)" == "debug"
+GLIB = 1
+HB_LIBS =	\
+	$(HB_LIBS)	\
+	$(CFG)\$(PLAT)\harfbuzz-gobject-d.lib
+!else
 GLIB = 1
 HB_LIBS =	\
 	$(HB_LIBS)	\
 	$(CFG)\$(PLAT)\harfbuzz-gobject.lib
+!endif
 
 HB_GOBJECT_ENUM_GENERATED_SOURCES = \
 	$(CFG)\$(PLAT)\harfbuzz-gobject\hb-gobject-enums.cc	\

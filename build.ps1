@@ -746,9 +746,13 @@ $items['harfbuzz'].BuildScript = {
 
 	Push-Location .\build\win32
 
-	Exec nmake /f Makefile.vc clean CFG=release
-	Exec nmake /f Makefile.vc CFG=release PYTHON=`"c:\Python27\python.exe`" PERL=`"$PerlDirectory\bin\perl.exe`" PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
-	Exec nmake /f Makefile.vc install CFG=release PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
+	foreach ($bt in $BuildTypes)	
+	{
+		$cfg = $bt.ToLower()
+		Exec nmake /f Makefile.vc clean CFG="$cfg"
+		Exec nmake /f Makefile.vc CFG="$cfg" PYTHON=`"c:\Python27\python.exe`" PERL=`"$PerlDirectory\bin\perl.exe`" PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
+		Exec nmake /f Makefile.vc install CFG="$cfg" PREFIX=`"$workingDirectory\..\..\gtk\$platform`" FREETYPE=1 GOBJECT=1
+	}
 
 	Pop-Location
 

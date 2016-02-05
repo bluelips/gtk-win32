@@ -486,39 +486,47 @@ $items['fontconfig'].BuildScript = {
 		(Get-Content $file | ForEach-Object { $_ -replace "<PlatformToolset>FIXME</PlatformToolset>", "<PlatformToolset>v${VSVer}0</PlatformToolset>" } ) | Set-Content $file
 	}
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	$bn = @{Debug='-d'; Release=''}
 
-	Exec msbuild fontconfig.sln /p:Platform=$platform /p:Configuration=Release /t:build /nodeReuse:True
+	foreach ($bt in $BuildTypes)	
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	[void] (Swap-Environment $originalEnvironment)
+		Exec msbuild fontconfig.sln /p:Platform=$platform /p:Configuration="$bt" /t:build /nodeReuse:True
 
-	switch ($filenameArch) {
-		'x86' {
-			$releaseDirectory = '.\Release'
+		[void] (Swap-Environment $originalEnvironment)
+
+		switch ($filenameArch) {
+			'x86' {
+				$releaseDirectory = ".\$bt"
+			}
+
+			'x64' {
+				$releaseDirectory = ".\x64\$bt"
+			}
 		}
 
-		'x64' {
-			$releaseDirectory = '.\x64\Release'
-		}
+		New-Item -Type Directory $packageDestination\bin
+		Copy-Item `
+			$releaseDirectory\fontconfig$($bn[$bt]).dll, `
+			$releaseDirectory\fontconfig$($bn[$bt]).pdb, `
+			$releaseDirectory\fc-cat.exe, `
+			$releaseDirectory\fc-cat.pdb, `
+			$releaseDirectory\fc-list.exe, `
+			$releaseDirectory\fc-list.pdb, `
+			$releaseDirectory\fc-match.exe, `
+			$releaseDirectory\fc-match.pdb, `
+			$releaseDirectory\fc-query.exe, `
+			$releaseDirectory\fc-query.pdb, `
+			$releaseDirectory\fc-scan.exe, `
+			$releaseDirectory\fc-scan.pdb `
+			$packageDestination\bin
+
+		New-Item -Type Directory $packageDestination\lib
+		Copy-Item `
+			$releaseDirectory\fontconfig$($bn[$bt]).lib `
+			$packageDestination\lib
 	}
-
-	New-Item -Type Directory $packageDestination\bin
-	Copy-Item `
-		$releaseDirectory\fontconfig.dll, `
-		$releaseDirectory\fontconfig.pdb, `
-		$releaseDirectory\fc-cache.exe, `
-		$releaseDirectory\fc-cache.pdb, `
-		$releaseDirectory\fc-cat.exe, `
-		$releaseDirectory\fc-cat.pdb, `
-		$releaseDirectory\fc-list.exe, `
-		$releaseDirectory\fc-list.pdb, `
-		$releaseDirectory\fc-match.exe, `
-		$releaseDirectory\fc-match.pdb, `
-		$releaseDirectory\fc-query.exe, `
-		$releaseDirectory\fc-query.pdb, `
-		$releaseDirectory\fc-scan.exe, `
-		$releaseDirectory\fc-scan.pdb `
-		$packageDestination\bin
 
 	New-Item -Type Directory $packageDestination\etc\fonts
 	Copy-Item `
@@ -533,11 +541,6 @@ $items['fontconfig'].BuildScript = {
 		.\fontconfig\fontconfig.h `
 		$packageDestination\include\fontconfig
 
-	New-Item -Type Directory $packageDestination\lib
-	Copy-Item `
-		$releaseDirectory\fontconfig.lib `
-		$packageDestination\lib
-
 	New-Item -Type Directory $packageDestination\share\doc\fontconfig
 	Copy-Item .\COPYING $packageDestination\share\doc\fontconfig
 
@@ -548,21 +551,26 @@ $items['freetype'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	$bn = @{Debug='-d'; Release=''}
 
-	Exec msbuild builds\windows\vc$VSVer\freetype.vcxproj /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	[void] (Swap-Environment $originalEnvironment)
+		Exec msbuild builds\windows\vc$VSVer\freetype.vcxproj /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
+
+		[void] (Swap-Environment $originalEnvironment)
+
+		New-Item -Type Directory $packageDestination\lib
+		Copy-Item `
+			".\objs\$platform\freetype$($bn[$bt]).lib" `
+			$packageDestination\lib
+	}
 
 	New-Item -Type Directory $packageDestination\include
 	Copy-Item -Recurse `
 		.\include\* `
 		$packageDestination\include
-
-	New-Item -Type Directory $packageDestination\lib
-	Copy-Item `
-		".\objs\$platform\freetype.lib" `
-		$packageDestination\lib
 
 	New-Item -Type Directory $packageDestination\share\doc\freetype
 	Copy-Item .\docs\LICENSE.TXT $packageDestination\share\doc\freetype\COPYING

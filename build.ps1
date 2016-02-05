@@ -910,19 +910,29 @@ $items['libxml2'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	$bn = @{Debug='-d'; Release=''}
 
-	Exec msbuild win32\vc$VSVer\libxml2.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	[void] (Swap-Environment $originalEnvironment)
+		Exec msbuild win32\vc$VSVer\libxml2.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
 
-	New-Item -Type Directory $packageDestination\bin
-	Copy-Item `
-		.\lib\libxml2.dll, `
-		.\lib\libxml2.pdb, `
-		.\lib\runsuite.exe, `
-		.\lib\runsuite.pdb `
-		$packageDestination\bin
+		[void] (Swap-Environment $originalEnvironment)
+
+		New-Item -Type Directory $packageDestination\bin
+		Copy-Item `
+			.\lib\libxml2$($bn[$bt]).dll, `
+			.\lib\libxml2$($bn[$bt]).pdb, `
+			.\lib\runsuite.exe, `
+			.\lib\runsuite.pdb `
+			$packageDestination\bin
+
+		New-Item -Type Directory $packageDestination\lib
+		Copy-Item `
+			.\lib\libxml2$($bn[$bt]).lib `
+			$packageDestination\lib
+	}
 
 	New-Item -Type Directory $packageDestination\include\libxml
 	Copy-Item `
@@ -930,11 +940,6 @@ $items['libxml2'].BuildScript = {
 		.\include\wsockcompat.h, `
 		.\include\libxml\*.h `
 		$packageDestination\include\libxml
-
-	New-Item -Type Directory $packageDestination\lib
-	Copy-Item `
-		.\lib\libxml2.lib `
-		$packageDestination\lib
 
 	New-Item -Type Directory $packageDestination\share\doc\libxml2
 	Copy-Item .\COPYING $packageDestination\share\doc\libxml2

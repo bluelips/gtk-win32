@@ -9,7 +9,10 @@
     <PangoDefines>G_LOG_DOMAIN="Pango";PANGO_ENABLE_BACKEND;PANGO_ENABLE_ENGINE;SYSCONFDIR="$(PangoDummyPrefix)/etc";LIBDIR="$(PangoDummyPrefix)/lib"</PangoDefines>
     <NoFCDef>PANGO_VISUALC_NO_FC</NoFCDef>
     <PangoFT2Incs>..;$(GlibEtcInstallRoot)\include\harfbuzz</PangoFT2Incs>
-    <PangoFT2Libs>fontconfig.lib;freetype.lib;harfbuzz.lib</PangoFT2Libs>
+    <PangoFT2LibsRelease>fontconfig.lib;freetype.lib;harfbuzz.lib</PangoFT2LibsRelease>
+	<PangoFT2LibsDebug>fontconfig-d.lib;freetype-d.lib;harfbuzz-d.lib</PangoFT2LibsDebug>
+    <CPPDepLibsRelease>gmodule-2.0.lib;gobject-2.0.lib;glib-2.0.lib;intl.lib</CPPDepLibsRelease>
+    <CPPDepLibsDebug>gmodule-2.0-d.lib;gobject-2.0-d.lib;glib-2.0-d.lib;intl-d.lib</CPPDepLibsDebug>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>pangobuilddefinesprops</_PropertySheetDisplayName>
@@ -25,9 +28,8 @@
       <AdditionalOptions>/d2Zi+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>gmodule-2.0.lib;gobject-2.0.lib;glib-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(GlibEtcInstallRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ProgramDatabaseFile>$(OutDir)$(PangoDllPrefix)$(ProjectName)$(PangoDllSuffix).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -46,8 +48,17 @@
     <BuildMacro Include="PangoFT2Incs">
       <Value>$(PangoFT2Incs)</Value>
     </BuildMacro>
-    <BuildMacro Include="PangoFT2Libs">
-      <Value>$(PangoFT2Libs)</Value>
+    <BuildMacro Include="PangoFT2LibsRelease">
+      <Value>$(PangoFT2LibsRelease)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PangoFT2LibsDebug">
+      <Value>$(PangoFT2LibsDebug)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsRelease">
+      <Value>$(CPPDepLibsRelease)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsDebug">
+      <Value>$(CPPDepLibsDebug)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

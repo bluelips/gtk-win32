@@ -1064,11 +1064,14 @@ $items['pango'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\pango.sln /p:Platform=$platform /p:Configuration=Release_FC /nodeReuse:True
+		Exec msbuild build\win32\vs$VSVer\pango.sln /p:Platform=$platform /p:Configuration="$bt"_FC /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\pango
 	Copy-Item .\COPYING $packageDestination\share\doc\pango

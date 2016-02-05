@@ -822,28 +822,38 @@ $items['libpng'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	$bn = @{Debug='libpng16-d'; Release='libpng16'}
 
-	Exec msbuild projects\vc$VSVer\pnglibconf\pnglibconf.vcxproj /p:Platform=$platform /p:Configuration=Release /p:SolutionDir=$PWD\projects\vc$VSVer\ /nodeReuse:True
-	Exec msbuild projects\vc$VSVer\libpng\libpng.vcxproj /p:Platform=$platform /p:Configuration=Release /p:SolutionDir=$PWD\projects\vc$VSVer\ /nodeReuse:True
+	foreach ($bt in $BuildTypes)	
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	[void] (Swap-Environment $originalEnvironment)
+		Exec msbuild projects\vc$VSVer\pnglibconf\pnglibconf.vcxproj /p:Platform=$platform /p:Configuration=Release /p:SolutionDir=$PWD\projects\vc$VSVer\ /nodeReuse:True
+		Exec msbuild projects\vc$VSVer\libpng\libpng.vcxproj /p:Platform=$platform /p:Configuration="$bt" /p:SolutionDir=$PWD\projects\vc$VSVer\ /nodeReuse:True
 
-	switch ($filenameArch) {
-		'x86' {
-			$releaseDirectory = ".\projects\vc$VSVer\Release"
+		[void] (Swap-Environment $originalEnvironment)
+
+		switch ($filenameArch) {
+			'x86' {
+				$releaseDirectory = ".\projects\vc$VSVer\$bt"
+			}
+
+			'x64' {
+				$releaseDirectory = ".\projects\vc$VSVer\x64\$bt"
+			}
 		}
 
-		'x64' {
-			$releaseDirectory = ".\projects\vc$VSVer\x64\Release"
-		}
+		New-Item -Type Directory $packageDestination\bin
+		Copy-Item `
+			$releaseDirectory\$($bn[$bt]).dll, `
+			$releaseDirectory\$($bn[$bt]).pdb `
+			$packageDestination\bin
+
+		New-Item -Type Directory $packageDestination\lib
+		Copy-Item `
+			$releaseDirectory\$($bn[$bt]).lib `
+			$packageDestination\lib
 	}
-
-	New-Item -Type Directory $packageDestination\bin
-	Copy-Item `
-		$releaseDirectory\libpng16.dll, `
-		$releaseDirectory\libpng16.pdb `
-		$packageDestination\bin
 
 	New-Item -Type Directory $packageDestination\include
 	Copy-Item `
@@ -852,11 +862,6 @@ $items['libpng'].BuildScript = {
 		.\pnglibconf.h, `
 		.\pngpriv.h `
 		$packageDestination\include
-
-	New-Item -Type Directory $packageDestination\lib
-	Copy-Item `
-		$releaseDirectory\libpng16.lib `
-		$packageDestination\lib
 
 	New-Item -Type Directory $packageDestination\share\doc\libpng
 	Copy-Item .\LICENSE $packageDestination\share\doc\libpng\COPYING
@@ -1076,12 +1081,15 @@ $items['pixman']['BuildScript'] = {
 
 	$exports | Sort-Object -Unique | Out-File -Encoding OEM .\pixman\pixman.symbols
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vc$VSVer\pixman.vcxproj /p:Platform=$platform /p:Configuration=Release /p:SolutionDir=$PWD\build\win32\vc$VSVer\ /maxcpucount /nodeReuse:True
-	Exec msbuild build\win32\vc$VSVer\install.vcxproj /p:Platform=$platform /p:Configuration=Release /p:SolutionDir=$PWD\build\win32\vc$VSVer\ /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vc$VSVer\pixman.vcxproj /p:Platform=$platform /p:Configuration="$bt" /p:SolutionDir=$PWD\build\win32\vc$VSVer\ /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vc$VSVer\install.vcxproj /p:Platform=$platform /p:Configuration="$bt" /p:SolutionDir=$PWD\build\win32\vc$VSVer\ /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\pixman
 	Copy-Item .\COPYING $packageDestination\share\doc\pixman

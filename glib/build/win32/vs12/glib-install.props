@@ -316,11 +316,11 @@
 			if "$(Configuration)" == "Release" copy $(BinDir)\gobject-$(ApiVersion).lib $(CopyDir)\lib
 			if "$(Configuration)" == "Release" copy $(BinDir)\gio-$(ApiVersion).lib $(CopyDir)\lib
 
-			if "$(Configuration)" == "Debug" copy $(BinDir)\glib-d-$(ApiVersion).lib $(CopyDir)\lib
-			if "$(Configuration)" == "Debug" copy $(BinDir)\gthread-d-$(ApiVersion).lib $(CopyDir)\lib
-			if "$(Configuration)" == "Debug" copy $(BinDir)\gmodule-d-$(ApiVersion).lib $(CopyDir)\lib
-			if "$(Configuration)" == "Debug" copy $(BinDir)\gobject-d-$(ApiVersion).lib $(CopyDir)\lib
-			if "$(Configuration)" == "Debug" copy $(BinDir)\gio-d-$(ApiVersion).lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\glib-$(ApiVersion)-d.lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\gthread-$(ApiVersion)-d.lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\gmodule-$(ApiVersion)-d.lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\gobject-$(ApiVersion)-d.lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\gio-$(ApiVersion)-d.lib $(CopyDir)\lib
 
 			mkdir $(CopyDir)\share\glib-$(ApiVersion)\schemas
 			copy ..\..\..\gio\gschema.dtd $(CopyDir)\share\glib-$(ApiVersion)\schemas

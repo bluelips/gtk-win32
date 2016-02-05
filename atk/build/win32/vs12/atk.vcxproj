@@ -86,12 +86,12 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)-d$(AtkDllSuffix).dll</OutputFile>
-      <ProgramDatabaseFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)-d$(AtkDllSuffix).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)$(AtkDllSuffix)-d.dll</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)$(AtkDllSuffix)-d.pdb</ProgramDatabaseFile>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(OutDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -133,11 +133,11 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)-d$(AtkDllSuffix).dll</OutputFile>
-      <ProgramDatabaseFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)-d$(AtkDllSuffix).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)$(AtkDllSuffix)-d.dll</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)$(AtkDllSuffix)-d.pdb</ProgramDatabaseFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

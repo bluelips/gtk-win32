@@ -78,15 +78,16 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;USE_X86_MMX;USE_SSE2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/w14710 /w14714 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -94,9 +95,10 @@
       <Command>$(GenPixmanDef)</Command>
     </PreLinkEvent>
     <Link>
-      <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion).dll</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion)-d.dll</OutputFile>
       <ModuleDefinitionFile>$(IntDir)$(ProjectName).def</ModuleDefinitionFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)-$(ApiVersion)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -122,6 +124,7 @@
     <Link>
       <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion).dll</OutputFile>
       <ModuleDefinitionFile>$(IntDir)$(ProjectName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)-$(ApiVersion).pdb</ProgramDatabaseFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
@@ -135,9 +138,10 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
+      <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;USE_SSE2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -150,9 +154,10 @@
       <Command>$(GenPixmanDef)</Command>
     </PreLinkEvent>
     <Link>
-      <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion).dll</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion)-d.dll</OutputFile>
       <ModuleDefinitionFile>$(IntDir)$(ProjectName).def</ModuleDefinitionFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)-$(ApiVersion)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
@@ -180,6 +185,7 @@
     <Link>
       <OutputFile>$(OutDir)$(ProjectName)-$(ApiVersion).dll</OutputFile>
       <ModuleDefinitionFile>$(IntDir)$(ProjectName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName)-$(ApiVersion).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion).lib</ImportLibrary>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

@@ -149,10 +149,10 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -175,10 +175,10 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -201,10 +201,10 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -227,10 +227,10 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;pcred.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)-d$(GlibDllSuffix).pdb</ProgramDatabaseFile>
-      <ImportLibrary>$(TargetDir)$(ProjectName)-d-$(ApiVersion).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(GlibDllPrefix)$(ProjectName)$(GlibDllSuffix)-d.pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-$(ApiVersion)-d.lib</ImportLibrary>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>

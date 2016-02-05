@@ -11,14 +11,13 @@
 
 			if "$(Configuration)" == "Release" copy $(BinDir)\$(AtkDllPrefix)atk$(AtkDllSuffix).dll $(CopyDir)\bin
 			if "$(Configuration)" == "Release" copy $(BinDir)\$(AtkDllPrefix)atk$(AtkDllSuffix).pdb $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(AtkDllPrefix)atk-d$(AtkDllSuffix).dll $(CopyDir)\bin
-			if "$(Configuration)" == "Debug" copy $(BinDir)\$(AtkDllPrefix)atk-d$(AtkDllSuffix).pdb $(CopyDir)\bin
-
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(AtkDllPrefix)atk$(AtkDllSuffix)-d.dll $(CopyDir)\bin
+			if "$(Configuration)" == "Debug" copy $(BinDir)\$(AtkDllPrefix)atk$(AtkDllSuffix)-d.pdb $(CopyDir)\bin
 
 			mkdir $(CopyDir)\lib
 
 			if "$(Configuration)" == "Release" copy $(BinDir)\atk-$(ApiVersion).lib $(CopyDir)\lib
-			if "$(Configuration)" == "Debug" copy $(BinDir)\atk-d-$(ApiVersion).lib $(CopyDir)\lib
+			if "$(Configuration)" == "Debug" copy $(BinDir)\atk-$(ApiVersion)-d.lib $(CopyDir)\lib
 
 			mkdir $(CopyDir)\include\atk-$(ApiVersion)\atk
 

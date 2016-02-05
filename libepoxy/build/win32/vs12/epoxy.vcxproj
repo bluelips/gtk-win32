@@ -90,11 +90,11 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName).lib</ImportLibrary>
-      <ProgramDatabaseFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix)-d.pdb</ProgramDatabaseFile>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -134,11 +134,11 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix).dll</OutputFile>
+      <OutputFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName).lib</ImportLibrary>
-      <ProgramDatabaseFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(TargetDir)$(ProjectName)-d.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(EpoxyDllPrefix)$(ProjectName)$(EpoxyDllSuffix)-d.pdb</ProgramDatabaseFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

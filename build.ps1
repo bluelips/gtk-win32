@@ -717,11 +717,14 @@ $items['gtk3'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)	
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\gtk+.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vs$VSVer\gtk+.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\locale
 
@@ -791,11 +794,14 @@ $items['libepoxy'].BuildScript = {
 
 	Exec $patch -p1 -i 0001-MSVC-Builds-Support-PACKED.patch
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\epoxy.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vs$VSVer\epoxy.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	Package $packageDestination
 }

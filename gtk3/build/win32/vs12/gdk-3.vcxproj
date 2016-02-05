@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -135,21 +135,21 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\gdk;..\..\..\gdk\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;G_ENABLE_DEBUG;$(GdkDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix)-d.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName).0.lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(ProjectName).0-d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -158,13 +158,13 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\gdk;..\..\..\gdk\win32;..\..\..\gdk\broadway;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;G_ENABLE_DEBUG;$(GdkDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>imm32.lib;winmm.lib;ws2_32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -187,7 +187,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).pdb</ProgramDatabaseFile>
@@ -225,7 +225,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\gdk;..\..\..\gdk\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;G_ENABLE_DEBUG;$(GdkDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -234,12 +234,12 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).dll</OutputFile>
+      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;$(CPPDepLibsDebug);%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix)-d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix)-d.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(ProjectName).0.lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(ProjectName).0-d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -248,7 +248,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\..\gdk;..\..\..\gdk\win32;..\..\..\gdk\broadway;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;G_ENABLE_DEBUG;$(GdkDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -277,7 +277,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>imm32.lib;winmm.lib;dwmapi.lib;$(CPPDepLibsRelease);%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(GtkDllPrefix)$(ProjectName)$(GtkDllSuffix).pdb</ProgramDatabaseFile>
@@ -314,40 +314,40 @@
     <ResourceCompile Include="..\..\..\gdk\win32\rc\gdk.rc" />
   </ItemGroup>
   <ItemGroup>
-   <ClCompile Include="..\..\..\gdk\deprecated\gdkcolor.c" />
-   <ClCompile Include="..\..\..\gdk\gdk-private.c" />
-   <ClCompile Include="..\..\..\gdk\gdk.c" />
-   <ClCompile Include="..\..\..\gdk\gdkapplaunchcontext.c" />
-   <ClCompile Include="..\..\..\gdk\gdkcairo.c" />
-   <ClCompile Include="..\..\..\gdk\gdkcursor.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdeprecated.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdevice.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdevicemanager.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdisplay.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdisplaymanager.c" />
-   <ClCompile Include="..\..\..\gdk\gdkdnd.c" />
-   <ClCompile Include="..\..\..\gdk\gdkevents.c" />
-   <ClCompile Include="..\..\..\gdk\gdkframetimings.c" />
-   <ClCompile Include="..\..\..\gdk\gdkgl.c" />
-   <ClCompile Include="..\..\..\gdk\gdkglcontext.c" />
-   <ClCompile Include="..\..\..\gdk\gdkglobals.c" />
-   <ClCompile Include="..\..\..\gdk\gdkkeys.c" />
-   <ClCompile Include="..\..\..\gdk\gdkkeyuni.c" />
-   <ClCompile Include="..\..\..\gdk\gdkoffscreenwindow.c" />
-   <ClCompile Include="..\..\..\gdk\gdkframeclock.c" />
-   <ClCompile Include="..\..\..\gdk\gdkframeclockidle.c" />
-   <ClCompile Include="..\..\..\gdk\gdkpango.c" />
-   <ClCompile Include="..\..\..\gdk\gdkpixbuf-drawable.c" />
-   <ClCompile Include="..\..\..\gdk\gdkproperty.c" />
-   <ClCompile Include="..\..\..\gdk\gdkrectangle.c" />
-   <ClCompile Include="..\..\..\gdk\gdkrgba.c" />
-   <ClCompile Include="..\..\..\gdk\gdkscreen.c" />
-   <ClCompile Include="..\..\..\gdk\gdkselection.c" />
-   <ClCompile Include="..\..\..\gdk\gdkvisual.c" />
-   <ClCompile Include="..\..\..\gdk\gdkwindow.c" />
-   <ClCompile Include="..\..\..\gdk\gdkwindowimpl.c" />
-   <ClCompile Include="..\..\..\gdk\gdkenumtypes.c" />
-   <ClCompile Include="..\..\..\gdk\gdkmarshalers.c" />
+    <ClCompile Include="..\..\..\gdk\deprecated\gdkcolor.c" />
+    <ClCompile Include="..\..\..\gdk\gdk-private.c" />
+    <ClCompile Include="..\..\..\gdk\gdk.c" />
+    <ClCompile Include="..\..\..\gdk\gdkapplaunchcontext.c" />
+    <ClCompile Include="..\..\..\gdk\gdkcairo.c" />
+    <ClCompile Include="..\..\..\gdk\gdkcursor.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdeprecated.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdevice.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdevicemanager.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdisplay.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdisplaymanager.c" />
+    <ClCompile Include="..\..\..\gdk\gdkdnd.c" />
+    <ClCompile Include="..\..\..\gdk\gdkevents.c" />
+    <ClCompile Include="..\..\..\gdk\gdkframetimings.c" />
+    <ClCompile Include="..\..\..\gdk\gdkgl.c" />
+    <ClCompile Include="..\..\..\gdk\gdkglcontext.c" />
+    <ClCompile Include="..\..\..\gdk\gdkglobals.c" />
+    <ClCompile Include="..\..\..\gdk\gdkkeys.c" />
+    <ClCompile Include="..\..\..\gdk\gdkkeyuni.c" />
+    <ClCompile Include="..\..\..\gdk\gdkoffscreenwindow.c" />
+    <ClCompile Include="..\..\..\gdk\gdkframeclock.c" />
+    <ClCompile Include="..\..\..\gdk\gdkframeclockidle.c" />
+    <ClCompile Include="..\..\..\gdk\gdkpango.c" />
+    <ClCompile Include="..\..\..\gdk\gdkpixbuf-drawable.c" />
+    <ClCompile Include="..\..\..\gdk\gdkproperty.c" />
+    <ClCompile Include="..\..\..\gdk\gdkrectangle.c" />
+    <ClCompile Include="..\..\..\gdk\gdkrgba.c" />
+    <ClCompile Include="..\..\..\gdk\gdkscreen.c" />
+    <ClCompile Include="..\..\..\gdk\gdkselection.c" />
+    <ClCompile Include="..\..\..\gdk\gdkvisual.c" />
+    <ClCompile Include="..\..\..\gdk\gdkwindow.c" />
+    <ClCompile Include="..\..\..\gdk\gdkwindowimpl.c" />
+    <ClCompile Include="..\..\..\gdk\gdkenumtypes.c" />
+    <ClCompile Include="..\..\..\gdk\gdkmarshalers.c" />
     <ClCompile Include="..\..\..\gdk\gdkkeynames.c" />
   </ItemGroup>
   <ItemGroup>

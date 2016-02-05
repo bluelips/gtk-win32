@@ -15,6 +15,8 @@
     <GdkPixbufDefines>HAVE_CONFIG_H;GDK_PIXBUF_COMPILATION;GDK_PIXBUF_ENABLE_BACKEND;DLL_EXPORT;GDK_PIXBUF_RELOCATABLE;$(GdkPixbufPrefixDefine);$(GdkPixbufBinVerDefine);$(MODULAR_MACROS)</GdkPixbufDefines>
     <GdipLibs>gdiplus.lib</GdipLibs>
     <ImagingLibs>jpeg.lib;libjasper.lib;libtiff_i.lib</ImagingLibs>
+    <CPPDepLibsRelease>gio-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;glib-2.0.lib;intl.lib;libpng16.lib;zlib1.lib;</CPPDepLibsRelease>
+    <CPPDepLibsDebug>gio-2.0-d.lib;gmodule-2.0-d.lib;gobject-2.0-d.lib;glib-2.0-d.lib;intl-d.lib;libpng16-d.lib;zlib1-d.lib;</CPPDepLibsDebug>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>gdk-pixbufbuilddefinesprops</_PropertySheetDisplayName>
@@ -30,7 +32,7 @@
       <AdditionalOptions>/d2Zi+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>gio-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;glib-2.0.lib;intl.lib;libpng16.lib;zlib1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(GlibEtcInstallRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;LIBCMT.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -68,6 +70,12 @@
     </BuildMacro>
     <BuildMacro Include="ImagingLibs">
       <Value>$(ImagingLibs)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsRelease">
+      <Value>$(CPPDepLibsRelease)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsDebug">
+      <Value>$(CPPDepLibsDebug)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

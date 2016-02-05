@@ -574,11 +574,14 @@ $items['gdk-pixbuf'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\gdk-pixbuf.sln /p:Platform=$platform /p:Configuration=Release_GDI+ /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vs$VSVer\gdk-pixbuf.sln /p:Platform=$platform /p:Configuration="$bt"_GDI+ /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\gdk-pixbuf
 	Copy-Item .\COPYING $packageDestination\share\doc\gdk-pixbuf

@@ -5,6 +5,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <AtkDefines>ATK_COMPILATION;DLL_EXPORT;ATK_LOCALEDIR="/dummy/share/locale"</AtkDefines>
+    <CPPDepLibsRelease>glib-2.0.lib;gobject-2.0.lib;gmodule-2.0.lib;intl.lib</CPPDepLibsRelease>
+    <CPPDepLibsDebug>glib-d-2.0.lib;gobject-d-2.0.lib;gmodule-d-2.0.lib;intl-d.lib</CPPDepLibsDebug>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>atkbuilddefinesprops</_PropertySheetDisplayName>
@@ -20,14 +22,19 @@
       <AdditionalOptions>/d2Zi+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glib-2.0.lib;gobject-2.0.lib;gmodule-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(GLibEtcInstallRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ProgramDatabaseFile>$(OutDir)$(AtkDllPrefix)$(ProjectName)$(AtkDllSuffix).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="AtkDefines">
       <Value>$(AtkDefines)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsRelease">
+      <Value>$(CPPDepLibsRelease)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CPPDepLibsDebug">
+      <Value>$(CPPDepLibsDebug)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

@@ -328,11 +328,14 @@ $items['atk'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	$originalEnvironment = Swap-Environment $vcvarsEnvironment
+	foreach ($bt in $BuildTypes)
+	{
+		$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
-	Exec msbuild build\win32\vs$VSVer\atk.sln /p:Platform=$platform /p:Configuration=Release /maxcpucount /nodeReuse:True
+		Exec msbuild build\win32\vs$VSVer\atk.sln /p:Platform=$platform /p:Configuration="$bt" /maxcpucount /nodeReuse:True
 
-	[void] (Swap-Environment $originalEnvironment)
+		[void] (Swap-Environment $originalEnvironment)
+	}
 
 	New-Item -Type Directory $packageDestination\share\doc\atk
 	Copy-Item .\COPYING $packageDestination\share\doc\atk
@@ -623,8 +626,6 @@ $items['glib'].BuildScript = {
 	Exec $patch -p1 -i glib-package-installation-directory.patch
 	Exec $patch -p1 -i 0001-Change-message-system-to-use-fputs-instead-of-write.patch
 	Exec $patch -p1 -i Add-gsystemthreadsetname-implementation-for-W32-th.patch	
-
-	$bn = @{Debug='zlib1-d'; Release='zlib1'}
 
 	foreach ($bt in $BuildTypes)
 	{

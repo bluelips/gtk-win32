@@ -55,6 +55,11 @@ The directory where you installed perl.
 .PARAMETER OnlyBuild
 A subset of the items you want built.
 
+.PARAMETER SkipDownload
+Don't download and extract (only useful if you already have downloaded everything but can avoid multiple extraction errors).
+
+.PARAMETER SkipSleeps
+Disable some of the script sleeping on errors to speed things up.
 
 .EXAMPLE
 build.ps1
@@ -126,7 +131,13 @@ param (
 
 	[string]
 	$PerlDirectory = "C:\perl",
+	
+	[switch]
+	$SkipDownload = $false,
 
+	[switch]
+	$SkipSleeps = $false,
+	
 	[string[]][ValidateSet(
 		'atk',
 		'cairo',
@@ -480,7 +491,7 @@ $items['fontconfig'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i fontconfig.patch
+	AttemptPatch "fontconfig.patch"
 
 	#make the fontconfig files work on other compatible vs versions
 	Get-ChildItem "$PWD" -Filter *.vcxproj | `
@@ -604,8 +615,8 @@ $items['gettext-runtime'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i gettext-runtime.patch
-	Exec $patch -p1 -i gettext-lib-prexif.patch	
+	AttemptPatch "gettext-runtime.patch"
+	AttemptPatch "gettext-lib-prexif.patch"
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
@@ -636,10 +647,10 @@ $items['glib'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i glib-if_nametoindex.patch
-	Exec $patch -p1 -i glib-package-installation-directory.patch
-	Exec $patch -p1 -i 0001-Change-message-system-to-use-fputs-instead-of-write.patch
-	Exec $patch -p1 -i Add-gsystemthreadsetname-implementation-for-W32-th.patch	
+	AttemptPatch "glib-if_nametoindex.patch"
+	AttemptPatch "glib-package-installation-directory.patch"
+	AttemptPatch "0001-Change-message-system-to-use-fputs-instead-of-write.patch"
+	AttemptPatch "Add-gsystemthreadsetname-implementation-for-W32-th.patch"	
 
 	foreach ($bt in $BuildTypes)
 	{
@@ -687,10 +698,10 @@ $items['gtk'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i gtk-revert-scrolldc-commit.patch
-	Exec $patch -p1 -i gtk-bgimg.patch
-	Exec $patch -p1 -i gtk-accel.patch
-	Exec $patch -p1 -i gtk-multimonitor.patch
+	AttemptPatch "gtk-revert-scrolldc-commit.patch"
+	AttemptPatch "gtk-bgimg.patch"
+	AttemptPatch "gtk-accel.patch"
+	AttemptPatch "gtk-multimonitor.patch"
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
@@ -792,7 +803,7 @@ $items['libepoxy'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i 0001-MSVC-Builds-Support-PACKED.patch
+	AttemptPatch "0001-MSVC-Builds-Support-PACKED.patch"
 
 	foreach ($bt in $BuildTypes)
 	{
@@ -810,10 +821,10 @@ $items['libffi'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i libffi-msvc-complex.patch
-	Exec $patch -p1 -i libffi-win64-jmp.patch
-	Exec $patch -p1 -i 0001-Fix-build-on-windows.patch
-
+	AttemptPatch "libffi-msvc-complex.patch"	
+	AttemptPatch "libffi-win64-jmp.patch"
+	AttemptPatch "0001-Fix-build-on-windows.patch"
+	
 	switch ($filenameArch) {
 		'x86' {
 			$buildDestination = 'i686-pc-mingw32'
@@ -913,10 +924,10 @@ $items['libsoup'].BuildScript = {
 	$packageDestination = "$PWD-rel"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i 0001-Provide-a-_SOUP_EXTERN-so-we-ensure-the-methods-get-.patch
-	Exec $patch -p1 -i 0002-Mark-externalized-methods-with-SOUP_AVAILABLE_IN_2_4.patch
-	Exec $patch -p1 -i 0003-Properly-handle-the-visibility-of-the-methods.patch
-	Exec $patch -p1 -i 0001-Declare-a-SOUP_VAR-to-externalize-variables.patch
+	AttemptPatch "0001-Provide-a-_SOUP_EXTERN-so-we-ensure-the-methods-get-.patch"
+	AttemptPatch "0002-Mark-externalized-methods-with-SOUP_AVAILABLE_IN_2_4.patch"
+	AttemptPatch "0003-Properly-handle-the-visibility-of-the-methods.patch"
+	AttemptPatch "0001-Declare-a-SOUP_VAR-to-externalize-variables.patch"
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
@@ -1133,8 +1144,8 @@ $items['win-iconv'].BuildScript = {
 	$packageDestination = "$PWD-$filenameArch"
 	Remove-Item -Recurse $packageDestination -ErrorAction Ignore
 
-	Exec $patch -p1 -i missing-endif.patch
-	Exec $patch -p1 -i library-name.patch
+	AttemptPatch "missing-endif.patch"
+	AttemptPatch "library-name.patch"
 
 	$originalEnvironment = Swap-Environment $vcvarsEnvironment
 
@@ -1210,6 +1221,7 @@ $patch = "$Msys2Directory\usr\bin\patch.exe"
 if (-not $(Test-Path $patch)) {
 	throw "$patch not found. Please check that you installed patch in msys2 using ``pacman -S patch``"
 }
+$patchargs = "--forward", "-p1", "-i"
 
 $tar = "$Msys2Directory\usr\bin\tar.exe"
 if (-not $(Test-Path $tar)) {
@@ -1349,60 +1361,72 @@ $items.GetEnumerator() | %{
 		}
 	} -ArgumentList $item {
 		param ($item)
+		
+		if($using:SkipDownload -eq $true){
+			"Skipping $($item.Name)"
+		} else {		
+			"Doing $($item.Name)"
 
-		$ArchivesDownloadDirectory = $using:ArchivesDownloadDirectory
-		$Msys2Directory = $using:Msys2Directory
-		$tar = $using:tar
-		$workingDirectory = $using:workingDirectory
 
-		'Beginning job to download and extract'
+			$ArchivesDownloadDirectory = $using:ArchivesDownloadDirectory
+			$Msys2Directory = $using:Msys2Directory
+			$skipSleeps = $using:SkipSleeps
+			$tar = $using:tar
+			$workingDirectory = $using:workingDirectory
+			
+			'Beginning job to download and extract'
 
-		# BaseName, etc. properties of FileInfo properties are available on the PSObject. Convert it back to a FileInfo.
-		$item.ArchiveFile = New-Object System.IO.FileInfo $item.ArchiveFile
+			# BaseName, etc. properties of FileInfo properties are available on the PSObject. Convert it back to a FileInfo.
+			$item.ArchiveFile = New-Object System.IO.FileInfo $item.ArchiveFile
 
-		if ($item.ArchiveFile.Exists) {
-			"$($item.ArchiveFile) already exists"
-		}
-		else {
-			"$($item.ArchiveFile) doesn't exist. Downloading..."
+			if ($item.ArchiveFile.Exists) {
+				"$($item.ArchiveFile) already exists"
+			}
+			else {
+				"$($item.ArchiveFile) doesn't exist. Downloading..."
 
-			$ProgressPreference = 'SilentlyContinue'
-			Invoke-WebRequest $item.ArchiveUrl -OutFile $item.ArchiveFile
-			$ProgressPreference = 'Continue'
+				$ProgressPreference = 'SilentlyContinue'
+				Invoke-WebRequest $item.ArchiveUrl -OutFile $item.ArchiveFile
+				$ProgressPreference = 'Continue'
 
-			"Downloaded $($item.ArchiveUrl)"
-		}
-
-		"Extracting $($item.ArchiveFile.Name) to $workingDirectory"
-
-		$env:PATH += ";$Msys2Directory\usr\bin"
-
-		if ($item.Name -ne 'gettext-runtime') {
-			Exec $tar ixf $(ConvertTo-Msys2Path $item.ArchiveFile) -C $(ConvertTo-Msys2Path $workingDirectory)
-
-			$outputDirectoryName = [System.IO.Path]::GetFilenameWithoutExtension($item.ArchiveFile.BaseName)
-
-			while (Test-Path "$workingDirectory\$outputDirectoryName") {
-				Move-Item "$workingDirectory\$outputDirectoryName" $item.BuildDirectory
-				Sleep 1
+				"Downloaded $($item.ArchiveUrl)"
 			}
 
-			while (Test-Path "$workingDirectory\$($item.Name)-$outputDirectoryName") {
-				Move-Item "$workingDirectory\$($item.Name)-$outputDirectoryName" $item.BuildDirectory
-				Sleep 1
+			"Extracting $($item.ArchiveFile.Name) to $workingDirectory"
+
+			$env:PATH += ";$Msys2Directory\usr\bin"
+
+			if ($item.Name -ne 'gettext-runtime') {
+				Exec $tar ixf $(ConvertTo-Msys2Path $item.ArchiveFile) -C $(ConvertTo-Msys2Path $workingDirectory)
+
+				$outputDirectoryName = [System.IO.Path]::GetFilenameWithoutExtension($item.ArchiveFile.BaseName)
+
+				while (Test-Path "$workingDirectory\$outputDirectoryName") {
+					Move-Item "$workingDirectory\$outputDirectoryName" $item.BuildDirectory
+					if($skipSleeps -ne $true) {
+						Sleep 1
+					}
+				}
+
+				while (Test-Path "$workingDirectory\$($item.Name)-$outputDirectoryName") {
+					Move-Item "$workingDirectory\$($item.Name)-$outputDirectoryName" $item.BuildDirectory
+					if($skipSleeps -ne $true) {
+						Sleep 1
+					}
+				}
 			}
-		}
-		else {
-			# gettext-runtime is a tarbomb
-			[void] (New-Item -Type Directory $item.BuildDirectory)
-			Exec $tar ixf $(ConvertTo-Msys2Path $item.ArchiveFile) -C $(ConvertTo-Msys2Path $item.BuildDirectory)
-		}
+			else {
+				# gettext-runtime is a tarbomb
+				[void] (New-Item -Type Directory $item.BuildDirectory)
+				Exec $tar ixf $(ConvertTo-Msys2Path $item.ArchiveFile) -C $(ConvertTo-Msys2Path $item.BuildDirectory)
+			}
 
-		"Extracted $($item.ArchiveFile.Name)"
+			"Extracted $($item.ArchiveFile.Name)"
 
-		if ($item.PatchDirectory.Exists) {
-			Copy-Item "$($item.PatchDirectory)\*" $item.BuildDirectory -Recurse -Force
-			"Copied patch contents from $($item.PatchDirectory) to $($item.BuildDirectory)"
+			if ($item.PatchDirectory.Exists) {
+				Copy-Item "$($item.PatchDirectory)\*" $item.BuildDirectory -Recurse -Force
+				"Copied patch contents from $($item.PatchDirectory) to $($item.BuildDirectory)"
+			}
 		}
 	})
 }
@@ -1418,7 +1442,13 @@ do {
 				Write-Host "$($job.Name) : $_"
 			}
 			else {
-				$Host.UI.WriteErrorLine("$($job.Name) : $($_.Exception.Message)")
+				$jobsleft = @(Get-Job).Length
+				$Host.UI.WriteErrorLine("joberr1($jobsleft) $($job.Name) : $($_.Exception.Message)")
+
+				Stop-Job $job
+				$items[$job.Name].State = 'Failed'
+				
+				Remove-Job -Force $job
 			}
 		}
 
@@ -1437,7 +1467,9 @@ do {
 	}
 
 	# Sleep a bit and then try again
-	Start-Sleep 1
+	if($SkipSleeps -ne $true) {
+		Start-Sleep 1
+	}
 } while (@(Get-Job).Length -gt 0)
 
 if (@($items.GetEnumerator() | ?{ $_.Value.State -eq 'Failed' }).Length -gt 0) {
@@ -1508,6 +1540,15 @@ while (@($items.GetEnumerator() | ?{ ($_.Value.State -eq 'Pending') -or ($_.Valu
 
 					Remove-Item -Recurse $directory
 				}
+				
+				function AttemptPatch([string] $patchFilename) {
+					try {
+						Exec $patch @patchargs $patchFilename
+					} catch {
+						Write-Host "Skipping patch exception"
+					}
+				}
+				
 			} -ArgumentList $nextPendingItem {
 				param ($item)
 
@@ -1517,6 +1558,7 @@ while (@($items.GetEnumerator() | ?{ ($_.Value.State -eq 'Pending') -or ($_.Valu
 				$filenameArch = $using:filenameArch
 				$Msys2Directory = $using:Msys2Directory
 				$patch = $using:patch
+				$patchargs = $using:patchargs
 				$PerlDirectory = $using:PerlDirectory
 				$platform = $using:platform
 				$vcvarsEnvironment = $using:vcvarsEnvironment
@@ -1542,7 +1584,7 @@ while (@($items.GetEnumerator() | ?{ ($_.Value.State -eq 'Pending') -or ($_.Valu
 				Write-Host "$($job.Name) : $_"
 			}
 			else {
-				$Host.UI.WriteErrorLine("$($job.Name) : $($_.Exception.Message)")
+				$Host.UI.WriteErrorLine("joberr2 $($job.Name) : $($_.Exception.Message)")
 			}
 
 			Out-File -Append -Encoding OEM -FilePath "$logDirectory\$($job.Name).log" -InputObject $_

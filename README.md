@@ -16,12 +16,12 @@ HexChat developers decided that their script should focus on their specific need
 
 1. Install the following build tools and dependencies:
 
-    * [Visual Studio 2013 Express for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-2013-express) - Any version of VS apart from 2013 is not supported.
+    * Visual Studio 2013 [Visual Studio 2013 Express for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-2013-express) - Any version of VS previous to 2013 is not supported.
     * [Windows Management Framework 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=40855) - Not needed for Windows 8.1 and above
     * [CMake 3.0.2](http://www.cmake.org/download/) (also works with CMake 2.8.x)
     * [msys2](https://msys2.github.io/)
     * Perl 5.20 [x86](https://dl.hexchat.net/misc/perl/perl-5.20.0-x86.7z) or [x64](https://dl.hexchat.net/misc/perl/perl-5.20.0-x64.7z) (extract to _C:\perl_)
-    * [Python 2.7](https://www.python.org/ftp/python/2.7.9/python-2.7.9.amd64.msi) (install in C:\Python27)
+    * [Python 2.7](https://www.python.org/ftp/python/2.7.9/python-2.7.9.msi) (install in C:\Python27)
 
 1. Follow the instructions on the msys2 page to update the core packages.
 
@@ -31,7 +31,7 @@ HexChat developers decided that their script should focus on their specific need
     pacman -S gzip nasm patch tar xz gettext make coreutils diffutils
     ```
 
-1. Clone [this repository](https://github.com/wingtk/gtk-win32) to _C:\gtk-build\github\gtk-win32_ It contains the build script, project files and patches.
+1. Clone [this repository](https://github.com/bluelips/gtk-win32) to _C:\gtk-build\github\gtk-win32_ It contains the build script, project files and patches.
 
 1. Now you have to allow PowerShell scripts to be run on your system. Open a PowerShell prompt **as Administrator** and run the following command:
 
@@ -60,5 +60,13 @@ HexChat developers decided that their script should focus on their specific need
     ```
 
     to see the help for the parameters and examples.
+	
+1. If everything built successfully, you need to compile the gtk schemas by doing:
+	
+	```powershell
+	C:\gtk-build\gtk\Win32\bin\glib-compile-schemas.exe C:\gtk-build\gtk\Win32\share\glib-2.0\schemas\
+	```
+	
+1. Now you need to add the compiled schemas directory to your path by using the "advanced system settings->environment variables" menu. Also create a new variable with name GSETTINGS_SCHEMA_DIR and the same compiled schemas directory as the value. If you have been following along that will be C:\gtk-build\gtk\Win32\share\glib-2.0\schemas
 
-1. When the script is done, your GTK+ stack will be found under _C:\gtk-build\gtk_. Enjoy!
+1. When the script is done, your GTK+ stack will be found under _C:\gtk-build\gtk_. Test that it works by running gtk3-demo.exe. Enjoy!

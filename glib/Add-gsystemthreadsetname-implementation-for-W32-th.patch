@@ -38,6 +38,7 @@ index 24efe9d..926d368 100644
 --- a/glib/glib-init.c
 +++ b/glib/glib-init.c
 @@ -265,6 +265,13 @@ DllMain (HINSTANCE hinstDLL,
+       g_thread_win32_thread_detach ();
  #endif
        break;
  

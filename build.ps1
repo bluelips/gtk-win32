@@ -651,6 +651,7 @@ $items['glib'].BuildScript = {
 	AttemptPatch "glib-package-installation-directory.patch"
 	AttemptPatch "0001-Change-message-system-to-use-fputs-instead-of-write.patch"
 	AttemptPatch "Add-gsystemthreadsetname-implementation-for-W32-th.patch"	
+	AttemptPatch "remove_special_folder_win32.patch"
 
 	foreach ($bt in $BuildTypes)
 	{

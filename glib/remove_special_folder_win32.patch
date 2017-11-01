@@ -1,0 +1,20 @@
+--- C:\gtk-build\untracked\gutils.c	2017-10-31 00:23:32.000000000 -0700
++++ C:\gtk-build\build\Win32\glib\glib\gutils.c	2017-10-30 22:46:57.000000000 -0700
+@@ -550,13 +550,16 @@
+   wchar_t path[MAX_PATH+1];
+   HRESULT hr;
+   LPITEMIDLIST pidl = NULL;
+   BOOL b;
+   gchar *retval = NULL;
+ 
+-  hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
++  // According to https://msdn.microsoft.com/en-us/library/windows/desktop/bb762203(v=vs.85).aspx
++  // SHGetSpecialFolderLocation is no longer supported after windows 2000????
++  //hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
++  hr = SHGetFolderLocation(NULL /*hwnd*/, csidl, NULL /*hUserToken*/, 0 /*dwReserved*/, &pidl);
+   if (hr == S_OK)
+     {
+       b = SHGetPathFromIDListW (pidl, path);
+       if (b)
+ 	retval = g_utf16_to_utf8 (path, -1, NULL, NULL, NULL);
+       CoTaskMemFree (pidl);
